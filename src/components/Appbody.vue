@@ -24,6 +24,7 @@
           padding-left: 20px;"
              placeholder="Title"
              class="placeholder"
+             @input="handleInputTitle"
              spellcheck="false">
         </div>
       </div>
@@ -31,14 +32,12 @@
 
         <div contenteditable="true" aria-multiline="true" role="textbox"
 
-             placeholder="Title"
+             placeholder="Take a note"
+             class="placeholder"
+             @input="handleInputContent"
              style="padding-top: 10px;
           padding-left: 20px;"
              spellcheck="false">
-          <div
-              contenteditable="true"
-              placeholder="Take a note"
-              class="placeholder"></div>
         </div>
       </div>
 
@@ -57,21 +56,30 @@ export default {
   data() {
     return {
       inEditingMode: false,
-      content: "New COntent"
+      content: "",
+      title:""
     }
   },
   methods: {
     toggle() {
       this.inEditingMode = !this.inEditingMode
+      this.save()
     },
-    handleInput: function (e) {
-      this.content = e.target.innerHTML
+    handleInputContent: function (e) {
+      this.content = e.target.innerText
     },
+    handleInputTitle:function (e) {
+      this.title=e.target.innerText
+    }
+  ,
     save() {
       eventBus.$emit('newnote', {
-        title: "New Note",
+        title: this.title,
         content: this.content
       })
+      this.inEditingMode=false
+      this.title=""
+      this.content=""
     }
   }
 }

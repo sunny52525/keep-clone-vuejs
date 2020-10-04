@@ -2,7 +2,7 @@
 <div class="keeps container">
 
   <v-row  class="row grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}' >
-      <div  v-packery-item class="col-lg-2 col-md-4 col-sm-12 each-keep packery-item" v-for="(keep,index) in keepDataMain.reverse()" :key="index">
+      <div  class="col-lg-2 col-md-4 col-sm-12 each-keep packery-item" v-packery-item  v-for="(keep,index) in keepDataMain.reverse()" :key="index">
     <h1>
       {{keep.title}}
     </h1>
@@ -20,7 +20,7 @@ export default {
 name: "Content",
   data(){
     return{
-      keepDataMain:[{title:'title',content:'content'},{title:'title',content:'coasdjahsdhajsakdkjjjjjjjjjjjcoasdjahsdhajsakdkjjjjjjjjjjjjcoasdjahsdhajsakdkjjjjjjjjjjjjjntent'},{title:'title',content:'content'},{title:'title',content:'content'},{title:'title',content:'content'},{title:'title',content:'content'},{title:'title',content:'content'},{title:'title',content:'content'}]
+      keepDataMain:[]
 
     }
   },
