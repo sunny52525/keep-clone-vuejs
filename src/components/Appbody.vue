@@ -1,4 +1,5 @@
 <template>
+
   <div class="editor">
     <div class="newNote"
          v-if="!inEditingMode"
@@ -6,7 +7,6 @@
          @click="inEditingMode=!inEditingMode"
     >
       <div contenteditable="true" aria-multiline="true" role="textbox"
-           @input="handleInput"
            style="padding-top: 10px;
           padding-left: 20px;"
            spellcheck="false">
@@ -22,7 +22,7 @@
         <div contenteditable="true" aria-multiline="true" role="textbox"
              style="padding-top: 10px;
           padding-left: 20px;"
-             :placeholder='content'
+             placeholder="Title"
              class="placeholder"
              spellcheck="false">
         </div>
@@ -34,12 +34,14 @@
              placeholder="Title"
              style="padding-top: 10px;
           padding-left: 20px;"
-
              spellcheck="false">
-
+          <div
+              contenteditable="true"
+              placeholder="Take a note"
+              class="placeholder"></div>
         </div>
-
       </div>
+
       <div class="close">
         <v-btn @click="save()" class="close-text" style="float: left;: right">Close</v-btn>
       </div>
@@ -76,25 +78,7 @@ export default {
 </script>
 
 <style>
-.close-text {
-  float: right;
-  margin-left: 3px !important;
-  color: white;
-  text-transform: none !important;
-  opacity: 0.9 !important;
-  background: none !important;
-  box-shadow: none !important;
-  font-size: 0.8rem;
-}
-
-.close {
-  display: flex;
-  float: none !important;
-  opacity: 0.9 !important;
-}
-
 .editor {
-
   margin: 32px auto 16px auto !important;
 
   height: max-content;
@@ -112,12 +96,10 @@ export default {
   border-radius: 8px !important;
 
 }
-
-.placeholder {
+.placeholder{
   opacity: 0.5;
 }
-
-.noteEdit {
+.noteEdit{
   height: max-content;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 2px 6px 2px rgba(0, 0, 0, 0.302);
   margin: 0 auto;
@@ -126,33 +108,29 @@ export default {
   box-sizing: border-box;
   border-radius: 8px !important;
 }
-
-.content {
+.content{
   margin-bottom: 10px;
 }
-
-[contenteditable=true]:empty:before {
+[contenteditable=true]:empty:before{
   content: attr(placeholder);
   pointer-events: none;
   display: block; /* For Firefox */
 }
 
 @media (max-width: 700px) {
-  .editor {
+  .editor{
     width: 500px !important;
   }
 }
-
 @media (max-width: 600px) {
-  .editor {
+  .editor{
     margin-left: 60px !important;
     width: 400px !important;
   }
 
 }
-
 @media (max-width: 500px) {
-  .editor {
+  .editor{
     width: 344px !important;
   }
 }
