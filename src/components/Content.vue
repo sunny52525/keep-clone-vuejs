@@ -1,8 +1,8 @@
 <template>
 <div class="keeps container">
 
-  <v-row class="row grid">
-      <div class="col-lg-2 col-md-4 col-sm-12 each-keep" v-for="(keep,index) in keepDataMain" :key="index">
+  <v-row  class="row grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}' >
+      <div  v-packery-item class="col-lg-2 col-md-4 col-sm-12 each-keep packery-item" v-for="(keep,index) in keepDataMain.reverse()" :key="index">
     <h1>
       {{keep.title}}
     </h1>
@@ -15,6 +15,7 @@
 
 <script>
 
+import {eventBus} from "@/main";
 export default {
 name: "Content",
   data(){
@@ -25,6 +26,11 @@ name: "Content",
   },
   components:{
 
+  },
+  created() {
+  eventBus.$on("newnote",(data)=>{
+    this.keepDataMain.push(data);
+  })
   }
 
 }
@@ -38,7 +44,7 @@ name: "Content",
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 2px 6px 2px rgba(0, 0, 0, 0.302);
   border: 1px solid #5f6368;
   margin-left: 10px;
-  margin-top: 10px;
+  margin-top: 10px !important;
   height: fit-content;
   /*width: 100px;*/
   /*margin-right: 10px !important;*/
