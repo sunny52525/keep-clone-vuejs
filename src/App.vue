@@ -46,6 +46,12 @@ border: none;
   color: white; /* old IE */
   background-color: white; /* Modern Browsers */
 }
+.v-card{
+  box-shadow: none !important;
+}
+.v-toolbar__title {
+  overflow: visible !important;
+}
 .changeLayout{
   opacity: 0.87 !important;
 }

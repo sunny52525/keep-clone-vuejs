@@ -67,6 +67,7 @@ export default {
 <style>
 .editor {
   margin: 32px auto 16px auto !important;
+
   height: max-content;
   width: 600px;
   border-radius: 8px !important;
@@ -101,6 +102,24 @@ export default {
   content: attr(placeholder);
   pointer-events: none;
   display: block; /* For Firefox */
+}
+
+@media (max-width: 700px) {
+  .editor{
+    width: 500px !important;
+  }
+}
+@media (max-width: 600px) {
+  .editor{
+    margin-left: 60px !important;
+    width: 400px !important;
+  }
+
+}
+@media (max-width: 500px) {
+    .editor{
+      width: 344px !important;
+    }
 }
 
 </style>

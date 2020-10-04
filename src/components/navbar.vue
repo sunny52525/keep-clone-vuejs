@@ -8,7 +8,6 @@
   >
     <v-app-bar-nav-icon
         @click="expand()"
-        v-click-outside="collapse"
     ></v-app-bar-nav-icon>
     <img src="https://img.icons8.com/color/40/000000/google-keep.png"/>
     <v-toolbar-title>
@@ -17,7 +16,7 @@
     <div class="search-bar"
          :style={backgroundColor:searchBarColor}
          @click="changeSearchBarColor('white')"
-
+          :class="{'search-bar-temp':searchIconActive,'width-full':!searchIconActive}"
          v-click-outside="changeSearchBarColorToGray"
         >
       <v-icon
@@ -25,24 +24,37 @@
        :color=searchIconColor
       >mdi-magnify</v-icon>
       <input class="search rounded-lg"
+             autofocus
              :class="{greyColor:isActive}"
              type="text" placeholder="Search">
     </div>
-    <v-spacer></v-spacer>
 
+<div
+style="position: fixed;
+right: 0;
+"
+
+>
     <v-btn icon>
-    <div class="changeLayout"></div>
+      <v-icon v-if="showSearch"
+              @click="changeIconState"
+      >
+        mdi-magnify
+      </v-icon>
+    </v-btn>
+    <v-btn icon>
+    <div class="changeLayout side-button"></div>
     </v-btn>
 
     <v-btn icon>
-     <div class="setting-icon opacity"></div>
+     <div class="setting-icon side-button opacity"></div>
     </v-btn>
 
     <v-btn icon>
-      <div class="profile-icon" style="opacity: 0.87">
-
-      </div>
+      <div class="profile-icon side-button" style="opacity: 0.87"></div>
     </v-btn>
+</div>
+
   </v-toolbar>
 
 </template>
@@ -55,7 +67,9 @@ export default {
     return {
       searchBarColor:"#525355",
       isActive:false,
-      searchIconColor:"white"
+      searchIconColor:"white",
+      showSearch:false,
+      searchIconActive:true
     }
   },
   methods: {
@@ -74,9 +88,30 @@ export default {
       this.searchBarColor="#525355"
       this.isActive=false;
       this.searchIconColor="white"
+    },
+  changeIconState(){
+      // alert(this.searchIconActive)
+    this.searchIconActive=!this.searchIconActive
+  },
+    onResize(){
+        this.showSearch = window.innerWidth <= 800;
+        if(window.innerWidth>=800)
+          this.searchIconActive=true
+    //    remove search-bar-temp and add width-full
+    },
+    showSearchBar(){
+    this.showSearch=!this.showSearch;
     }
 
+
+  },created() {
+    this.onResize()
+    window.addEventListener('resize',this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize',this.onResize)
   }
+
 }
 </script>
 <style>
@@ -84,18 +119,24 @@ export default {
   height: 100%;
   width: 600px;
   margin-left: 20px;
+  z-index: 99;
 
 }
 
 .search-bar {
   padding: 5px 10px 5px;
   height: 80%;
+  z-index: 99;
+  display: flex;
   margin-left: 100px !important;
   border-radius: 8px !important;
   background-color: #525355;
 }
 .search-icon{
   margin-top: 5px;
+}
+.width-full{
+  width: 100% !important;
 }
 ::placeholder {
   color: white;
@@ -128,4 +169,27 @@ export default {
 .opacity{
   opacity: 0.87 !important;
 }
+.side-button{
+  float: right !important;
+}
+
+@media (max-width: 1200px) {
+  .search{
+    width: 400px !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .search{
+    width: 350px !important;
+  }
+}
+@media (max-width: 800px) {
+  .search-bar-temp{
+    width: 0 !important;
+   visibility: hidden !important;
+  }
+
+}
+
 </style>
