@@ -42,7 +42,7 @@
       </div>
 
       <div class="close">
-        <v-btn @click="save()" class="close-text" style="float: left;: right">Close</v-btn>
+        <v-btn @click="save" class="close-text" style="float: left;: right">Close</v-btn>
       </div>
     </div>
   </div>

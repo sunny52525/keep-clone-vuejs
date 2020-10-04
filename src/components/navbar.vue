@@ -7,7 +7,7 @@
       color="#202124"
   >
     <v-app-bar-nav-icon
-        @click="expand()"
+        @click="expand"
     ></v-app-bar-nav-icon>
     <img src="https://img.icons8.com/color/40/000000/google-keep.png"/>
     <v-toolbar-title>
