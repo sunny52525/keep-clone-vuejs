@@ -43,7 +43,9 @@ right: 0;
       </v-icon>
     </v-btn>
     <v-btn icon>
-    <div class="changeLayout side-button"></div>
+    <div class="changeLayout side-button"
+    @click="changeLayout"
+    ></div>
     </v-btn>
 
     <v-btn icon>
@@ -78,6 +80,9 @@ export default {
     },
     collapse() {
       eventBus.$emit("collapse");
+    },
+    changeLayout(){
+      eventBus.$emit('changeLayout');
     },
     changeSearchBarColor(color){
       this.isActive=true;
@@ -120,6 +125,7 @@ export default {
   width: 600px;
   margin-left: 20px;
   z-index: 99;
+  margin-bottom: 10px !important;
 
 }
 
@@ -128,6 +134,7 @@ export default {
   height: 80%;
   z-index: 99;
   display: flex;
+  margin-bottom: 15px !important;
   margin-left: 100px !important;
   border-radius: 8px !important;
   background-color: #525355;

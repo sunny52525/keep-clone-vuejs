@@ -1,18 +1,59 @@
 <template>
   <div class="keeps container">
 
-    <v-row class="row grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}'>
+    <v-row class=" grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}'
+    :class="{'row':defaultLayout}"
+    >
 
-      <div class="col-lg-2 col-md-4 col-sm-12 each-keep packery-item" v-packery-item
-           v-for="(keep,index) in keepDataMain" :key="index">
-        <h1>
-          {{ keep.title }}
-        </h1>
-        <p>{{ keep.content }}</p>
+
+      <div :class="{'col-lg-2':defaultLayout,'col-md-4':defaultLayout,'col-sm-12':defaultLayout,'packery-item':defaultLayout,'each-keep':true,'layout-simple':!defaultLayout}"
+
+
+           v-for="(keep,index) in keepDataMain" :key="index" @mouseover="showDelete(index)" @mouseleave="hover=-1">
+
+        <div class="content-body"
+        :class="{'content-body-temp':!defaultLayout}">
+          <h1>
+            {{ keep.title }}
+          </h1>
+          <p>{{ keep.content }}</p>
+        </div>
+
+        <transition name="fade">
+          <div class="delete-icon" v-if="(index===hover)"
+               @click="deleteNote(index)"
+          >
+            <div
+                style="float: right !important; width: 32px; height: 32px"
+            ><v-icon
+            >
+              fa-trash
+            </v-icon>
+            </div>
+
+          </div>
+        </transition>
+
 
       </div>
 
     </v-row>
+    <v-snackbar
+        v-model="deletedSnackbar"
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            color="#8Ab4F8"
+            text
+            v-bind="attrs"
+            @click="deletedSnackbar = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -24,14 +65,32 @@ export default {
   name: "Content",
   data() {
     return {
-      keepDataMain: [].reverse()
+      keepDataMain: [].reverse(),
+      deleteIconVisible:false,
+      hover:-1,
+      deletedSnackbar:false,
+      text: 'Note Trashed',
+      defaultLayout:false,
 
+    }
+  },
+  methods:{
+    showDelete(index){
+      this.hover=index;
+
+    },
+    deleteNote(index){
+      this.keepDataMain.splice(index,1);
+      this.deletedSnackbar=true
     }
   },
   components: {},
   created() {
     eventBus.$on("newnote", (data) => {
       this.keepDataMain.push(data);
+    })
+    eventBus.$on('changeLayout',()=>{
+      this.defaultLayout=!this.defaultLayout
     })
   }
 
@@ -40,7 +99,9 @@ export default {
 
 <style scoped>
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css");
-
+.grid{
+  height: max-content !important;
+}
 .each-keep {
   border-radius: 8px !important;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.6), 0 2px 6px 2px rgba(0, 0, 0, 0.302);
@@ -49,7 +110,36 @@ export default {
   margin-top: 10px !important;
   height: fit-content;
   /*width: 100px;*/
+  width: 100vh !important;
   /*margin-right: 10px !important;*/
 
 }
+.delete-icon{
+  display: flex;
+  width: 24px; height: 24px;
+  right: 10px;
+  bottom: 10px;
+
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.layout-simple{
+  width: 600px !important;
+  padding: 10px ;
+  margin:0 auto;
+}
+.content-body-temp{
+  width: 600px;
+
+  word-wrap: break-word ;
+
+  padding: 20px;
+}
+
+
 </style>
