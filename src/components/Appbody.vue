@@ -17,10 +17,12 @@
          v-if="inEditingMode"
          v-click-outside="toggle"
 
+
     >
       <div class="title">
         <div contenteditable="true" aria-multiline="true" role="textbox"
-             style="padding-top: 10px;
+             style="padding-top: 10px;    max-height: 100px;
+    overflow-y: auto;
           padding-left: 20px;"
              placeholder="Title"
              class="placeholder"
@@ -35,7 +37,8 @@
              placeholder="Take a note"
              class="placeholder"
              @input="handleInputContent"
-             style="padding-top: 10px;
+             style="padding-top: 10px;   max-height: 410px;
+    overflow-y: auto;
           padding-left: 20px;"
              spellcheck="false">
         </div>
@@ -57,29 +60,29 @@ export default {
     return {
       inEditingMode: false,
       content: "",
-      title:""
+      title: ""
     }
   },
   methods: {
     toggle() {
       this.inEditingMode = !this.inEditingMode
-      this.save()
+
     },
     handleInputContent: function (e) {
       this.content = e.target.innerText
     },
-    handleInputTitle:function (e) {
-      this.title=e.target.innerText
+    handleInputTitle: function (e) {
+      this.title = e.target.innerText
     }
-  ,
+    ,
     save() {
       eventBus.$emit('newnote', {
         title: this.title,
         content: this.content
       })
-      this.inEditingMode=false
-      this.title=""
-      this.content=""
+      this.inEditingMode = false
+      this.title = ""
+      this.content = ""
     }
   }
 }

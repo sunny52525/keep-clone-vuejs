@@ -39,7 +39,14 @@
       >
 
         <div class="content-body"
-        :class="{'content-body-temp':!defaultLayout}"
+
+
+
+             :class="{'content-body-temp':!defaultLayout}"
+             style="
+    max-height: 400px;
+    overflow: hidden;
+"
              @click="showDialog({title:keep.title,body:keep.content})">
           <h1>
             {{ keep.title }}
@@ -178,6 +185,10 @@ export default {
   word-wrap: break-word ;
 
   padding: 20px;
+}
+
+.content-body{
+
 }
 
 
