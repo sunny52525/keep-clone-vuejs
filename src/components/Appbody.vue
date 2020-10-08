@@ -66,6 +66,9 @@ export default {
   methods: {
     toggle() {
       this.inEditingMode = !this.inEditingMode
+      if(this.content || this.title){
+        this.save();
+      }
 
     },
     handleInputContent: function (e) {
