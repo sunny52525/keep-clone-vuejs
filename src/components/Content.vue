@@ -1,6 +1,31 @@
 <template>
   <div class="keeps container">
+    <v-dialog
+        v-model="dialog"
+        width="800px"
+    >
+      <template >
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{dialogTitle}}</span>
+        </v-card-title>
+        <v-card-text>
+          {{dialogBody}}
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
 
+          <v-btn
+              color="white darken-1"
+              text
+              @click="dialog = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-row class=" grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}'
     :class="{'row':defaultLayout}"
     >
@@ -9,10 +34,13 @@
       <div :class="{'col-lg-2':defaultLayout,'col-md-4':defaultLayout,'col-sm-12':defaultLayout,'packery-item':defaultLayout,'each-keep':true,'layout-simple':!defaultLayout}"
 
 
-           v-for="(keep,index) in keepDataMain" :key="index" @mouseover="showDelete(index)" @mouseleave="hover=-1">
+           v-for="(keep,index) in keepDataMain" :key="index" @mouseover="showDelete(index)" @mouseleave="hover=-1"
+
+      >
 
         <div class="content-body"
-        :class="{'content-body-temp':!defaultLayout}">
+        :class="{'content-body-temp':!defaultLayout}"
+             @click="showDialog({title:keep.title,body:keep.content})">
           <h1>
             {{ keep.title }}
           </h1>
@@ -70,7 +98,11 @@ export default {
       hover:-1,
       deletedSnackbar:false,
       text: 'Note Trashed',
-      defaultLayout:false,
+      defaultLayout:true,
+      dialog: false,
+      dialogTitle:"",
+      dialogBody:"",
+
 
     }
   },
@@ -80,8 +112,15 @@ export default {
 
     },
     deleteNote(index){
+      this.dialog=false
       this.keepDataMain.splice(index,1);
       this.deletedSnackbar=true
+    },
+    showDialog(dialogData){
+      this.dialogTitle="" || dialogData.title;
+      this.dialogBody="" || dialogData.body;
+      console.log(dialogData)
+      this.dialog=true;
     }
   },
   components: {},
