@@ -29,7 +29,8 @@
                 link
                 @mouseover="mini=false"
                 @mouseleave="mini=true"
-            @click="mini=false"
+                @click="sidebarClicked(index)"
+
                 class="list-item"
                 :class='{yellowBackground:(index==active)}'
 
@@ -61,13 +62,26 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-          <appBody
+          <appBody v-if="!trashVisible"
           class="app-body"
           ></appBody>
 
         <contents
           class="content-body"
+          :keep-data-main="main"
+          v-if="!trashVisible"
+
         ></contents>
+        <contents
+            v-if="trashVisible"
+            class="content-body"
+            :keep-data-main="trash"
+
+        >
+
+        </contents>
+
+
       </v-card>
     </v-app>
   </div>
@@ -86,11 +100,17 @@ export default {
       active: 0,
       items: [
         {title: 'Notes'},
-        {title: 'Archive'},
         {title: 'Trash'},
       ],
+      main:[
+      ].reverse(),
+      trash:[].reverse(),
       mini: true,
+      trashVisible:false,
     }
+  },
+  props:{
+
   },
   components: {
     appBody,
@@ -105,6 +125,12 @@ export default {
     //     this.mini = false
     //   }
     // }
+    sidebarClicked(index){
+      this.mini=false;
+      this.trashVisible = index === 1;
+      this.active=index
+
+    }
   },
   created() {
  // window.addEventListener('resize',this.onResize)
@@ -113,6 +139,10 @@ export default {
     })
     eventBus.$on("collapse", () => {
       this.mini = true
+    })
+    eventBus.$on("trashed",(data)=>{
+      if(this.trashVisible!==true)
+      this.trash.push(data)
     })
   },
 

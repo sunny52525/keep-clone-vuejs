@@ -1,5 +1,7 @@
 <template>
   <div class="keeps container">
+
+
     <v-dialog
         v-model="dialog"
         width="800px"
@@ -29,19 +31,11 @@
     <v-row class=" grid" v-packery='{itemSelector: ".packery-item", percentPosition: true}'
     :class="{'row':defaultLayout}"
     >
-
-
       <div :class="{'col-lg-2':defaultLayout,'col-md-4':defaultLayout,'col-sm-12':defaultLayout,'packery-item':defaultLayout,'each-keep':true,'layout-simple':!defaultLayout}"
-
-
            v-for="(keep,index) in keepDataMain" :key="index" @mouseover="showDelete(index)" @mouseleave="hover=-1"
 
       >
-
         <div class="content-body"
-
-
-
              :class="{'content-body-temp':!defaultLayout}"
              style="
     max-height: 400px;
@@ -100,7 +94,7 @@ export default {
   name: "Content",
   data() {
     return {
-      keepDataMain: [].reverse(),
+      // keepDataMain: [].reverse(),
       deleteIconVisible:false,
       hover:-1,
       deletedSnackbar:false,
@@ -113,6 +107,8 @@ export default {
 
     }
   },
+props: ['keepDataMain','isTrash']
+,
   methods:{
     showDelete(index){
       this.hover=index;
@@ -120,6 +116,7 @@ export default {
     },
     deleteNote(index){
       this.dialog=false
+      eventBus.$emit('trashed',this.keepDataMain[index]);
       this.keepDataMain.splice(index,1);
       this.deletedSnackbar=true
     },
