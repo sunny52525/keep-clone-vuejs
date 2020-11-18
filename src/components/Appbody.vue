@@ -91,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .close-text {
   float: right;
   margin-left: 3px !important;

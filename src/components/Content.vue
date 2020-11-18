@@ -38,6 +38,7 @@
         :key="index"
         @mouseover="showDelete(index)"
         @mouseleave="hover = -1"
+        class="keep-item"
       >
         <div
           class="content-body"
@@ -142,7 +143,8 @@ export default {
   margin-top: 10px !important;
   height: fit-content;
   /*width: 100px;*/
-  width: 100vh !important;
+  /* width: 100vh !important; */
+ 
   /*margin-right: 10px !important;*/
 }
 .delete-icon {
@@ -174,6 +176,18 @@ export default {
   padding: 20px;
 }
 
-.content-body {
+@media (max-width: 768px){
+ 
+.each-keep{
+  /* width: auto !important; */
+   /* margin-right: auto; */
+   width: 40vh !important;
+    margin-right: 64px !important;
+    margin-left: 64px !important;
+
+}
+}
+.each-keep:nth-child(1){
+  margin-left: 64px !important;
 }
 </style>

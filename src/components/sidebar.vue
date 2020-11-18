@@ -151,7 +151,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .v-list-item__content {
   padding-left: 10px !important;
 }
@@ -164,9 +164,6 @@ svg {
   border: none !important;
 }
 
-.list-item {
-  /*background-color: #41331C;*/
-}
 
 .yellowBackground {
   background-color: #41331C;

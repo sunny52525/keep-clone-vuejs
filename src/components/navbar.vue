@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     expand() {
-      eventBus.$emit("clicked");
+      // eventBus.$emit("clicked");
     },
     collapse() {
       eventBus.$emit("collapse");
