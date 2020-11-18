@@ -181,7 +181,7 @@ export default {
 .each-keep{
   /* width: auto !important; */
    /* margin-right: auto; */
-   width: 40vh !important;
+   width: 80vw !important;
     margin-right: 64px !important;
     margin-left: 64px !important;
 

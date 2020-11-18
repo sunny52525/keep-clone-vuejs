@@ -37,7 +37,7 @@ right: 0;
 >
     <v-btn icon>
       <v-icon v-if="showSearch"
-              @click="changeIconState"
+              
       >
         mdi-magnify
       </v-icon>
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     expand() {
-      // eventBus.$emit("clicked");
+      eventBus.$emit("clicked");
     },
     collapse() {
       eventBus.$emit("collapse");
